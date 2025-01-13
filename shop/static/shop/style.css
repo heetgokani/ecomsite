@@ -2203,3 +2203,6 @@ body {
   font-size: 1px; /* Adjust the rupee symbol's font size */
   vertical-align: middle; /* Align the rupee symbol properly with the price */
 }
+.adddd {
+  font-size: 10px;
+}
