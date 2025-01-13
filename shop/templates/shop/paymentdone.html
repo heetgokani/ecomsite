@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Confirmation</title>
+    <style>
+      body {
+        font-family: "Verdana", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #1c1c1c, #8b0000);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-size: cover;
+      }
+
+      .confirmation-container {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 30px 25px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 85%;
+        max-width: 500px;
+        animation: slideIn 0.8s ease-in-out;
+      }
+
+      .icon {
+        font-size: 60px;
+        color: #28a745;
+        margin-bottom: 20px;
+        animation: pulse 1.5s infinite;
+      }
+
+      h1 {
+        font-size: 28px;
+        color: #2c2c2c;
+        margin: 10px 0 15px;
+        text-transform: uppercase;
+      }
+
+      p {
+        font-size: 16px;
+        color: #555555;
+        margin: 8px 0;
+        line-height: 1.6;
+      }
+
+      .highlight-text {
+        font-weight: bold;
+        color: #ff4500;
+      }
+      .tick {
+        width: 200px;
+        height: 200px;
+      }
+
+      .back-btn {
+        margin-top: 20px;
+        padding: 12px 25px;
+        font-size: 16px;
+        background: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: transform 0.3s, background-color 0.3s;
+      }
+
+      .back-btn:hover {
+        background: #c82333;
+        transform: scale(1.05);
+      }
+
+      .back-btn:active {
+        background: #bd2130;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.8;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        h1 {
+          font-size: 24px;
+        }
+        p {
+          font-size: 14px;
+        }
+        .back-btn {
+          font-size: 14px;
+          padding: 10px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="confirmation-container">
+      <img
+        class="tick"
+        src="{% static 'shop/images/tick.avif' %}"
+        alt="Card Logos"
+      />
+      <h1>Payment Successful</h1>
+      <p>Your transaction was successful. Thank you for trusting us!</p>
+      <p class="highlight-text">Very Are Happy To Serve You!</p>
+      <p>Continue shopping and visit us again soon.</p>
+      <button
+        class="back-btn"
+        type="button"
+        onclick="clearStorageAndRedirect()"
+      >
+        Back to Home
+      </button>
+    </div>
+
+    <script>
+      function clearStorageAndRedirect() {
+        localStorage.clear();
+        window.location.href = "{% url 'index' %}";
+      }
+    </script>
+  </body>
+</html>

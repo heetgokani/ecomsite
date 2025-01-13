@@ -1,0 +1,118 @@
+{% extends 'base.html' %} {% block body %}
+<section id="section3" class="custom-section">
+  <div class="heading-flex">
+    <h1 class="heading-product">Fuel Your Snack Cravings</h1>
+  </div>
+</section>
+<section class="custom-section1">
+  <div class="custom-grid-container">
+    {% for product in product_objects %}
+    <div class="custom-card">
+      <div class="custom-card-inner">
+        <!-- Front Side -->
+        <div class="custom-card-side front">
+          <img
+            class="product-image"
+            src="{{ product.image }}"
+            alt="Product Image"
+          />
+          <div class="custom-product-name" id="nm{{ product.id }}">
+            {{ product.name }}
+          </div>
+          <h2 class="custom-prices">
+            <span class="custom-price-container1">
+              ₹<span class="custom-original-price">{{ product.price }}</span>
+            </span>
+            <span class="custom-price-container">
+              ₹<span id="price{{ product.id }}" class="custom-discounted-price">
+                {{ product.discounted_price }}
+              </span>
+            </span>
+          </h2>
+
+          <div class="custom-ratings">
+            <span>Rating:</span>
+            <span class="custom-stars">⭐</span>
+            <span>({{ product.rating }})</span>
+          </div>
+        </div>
+        <!-- Back Side -->
+        <div class="custom-card-side back">
+          <p>{{ product.description }}</p>
+          {% if user.is_authenticated %} {% if product.stock == 0 %}
+          <p
+            class="custom-add-to-cart"
+            style="background: #ff0000; color: #ffffff; pointer-events: none"
+          >
+            Out of Stock
+          </p>
+          {% else %}
+          <button id="{{ product.id }}" class="custom-add-to-cart atc">
+            Add to Cart
+          </button>
+          {% endif %} {% else %}
+          <p
+            class="custom-add-to-cart"
+            style="background: #cccccc; color: #666666; pointer-events: none"
+          >
+            Login Required
+          </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+  const cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+  // Update cart count on page load
+  document.getElementById("cart").innerHTML = Object.keys(cart).length;
+
+  // Add to Cart Button Functionality
+  $(document).on("click", ".atc", function () {
+    const item_id = this.id.toString();
+    console.log(`Item ID: ${item_id}`);
+
+    if (cart[item_id] !== undefined) {
+      // Update quantity and total price
+      cart[item_id][0] += 1;
+      cart[item_id][2] += parseFloat(
+        document.getElementById("price" + item_id).innerHTML.trim()
+      );
+    } else {
+      // Add new item to the cart
+      const price = parseFloat(
+        document.getElementById("price" + item_id).innerHTML.trim()
+      );
+      const name = document.getElementById("nm" + item_id).innerHTML.trim();
+      cart[item_id] = [1, name, price];
+    }
+
+    console.log(cart);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    document.getElementById("cart").innerHTML = Object.keys(cart).length;
+  });
+
+  // Menu Modal Logic (if applicable)
+  const hamburgerIcon = document.getElementById("hamburger-icon");
+  const closeModalIcon = document.getElementById("close-modal-icon");
+  const menuModal = document.getElementById("menu-modal");
+
+  hamburgerIcon.addEventListener("click", function () {
+    menuModal.style.display = "flex";
+  });
+
+  closeModalIcon.addEventListener("click", function () {
+    menuModal.style.display = "none";
+  });
+
+  window.addEventListener("click", function (event) {
+    if (event.target === menuModal) {
+      menuModal.style.display = "none";
+    }
+  });
+</script>
+{% endblock %}
