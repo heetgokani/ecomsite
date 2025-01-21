@@ -283,7 +283,7 @@ body {
   position: relative;
   z-index: 2;
   max-width: 28.1rem;
-
+  transition: all cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
   animation: float 2s ease-in-out infinite;
 }
 
@@ -2205,4 +2205,17 @@ body {
 }
 .adddd {
   font-size: 10px;
+}
+body {
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.container {
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
 }
